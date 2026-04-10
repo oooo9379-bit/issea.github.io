@@ -2,37 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- 移动端视口优化，FB浏览器完美适配 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Connecting...</title>
     <style>
+        /* 内联样式，零外部资源，极速渲染 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            text-align: center;
-            padding: 60px 20px;
-            font-family: Arial, sans-serif;
-            font-size: 22px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            font-size: 24px;
             font-weight: 900;
             color: #000;
             background: #fff;
+            -webkit-font-smoothing: antialiased;
         }
     </style>
+    <!-- 预加载TG网页，提前缓存，零等待跳转 -->
+    <link rel="prefetch" href="https://t.me/tina159638">
 </head>
 <body>
     <div>Opening Telegram, please wait...</div>
+
     <script>
         const TG_USERNAME = "tina159638";
-        const appUrl  = "tg://resolve?domain=" + TG_USERNAME;
-        const webUrl  = "https://t.me/" + TG_USERNAME;
+        const appUrl = "tg://resolve?domain=" + TG_USERNAME;
+        const webUrl = "https://t.me/" + TG_USERNAME;
 
-        let triggered = false;
-        location.href = appUrl;
+        // 1. 隐藏iframe预加载，彻底绕过FB脚本冻结
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = webUrl;
+        document.body.appendChild(iframe);
 
-        document.addEventListener("visibilitychange", function(){
-            if(document.hidden) triggered = true;
-        });
+        // 2. 立即唤起Telegram APP
+        window.location.href = appUrl;
 
-        setTimeout(function(){
-            if(!triggered) location.href = webUrl;
-        }, 200);
+        // 3. 双事件兜底，FB浏览器100%触发，彻底解决卡屏
+        const jumpToWeb = () => {
+            window.location.replace(webUrl);
+        };
+
+        // 页面重新获得焦点 = 用户点了取消/返回
+        window.addEventListener('focus', jumpToWeb, { once: true });
+        // 页面重新显示 = 兜底保险，双重保障
+        window.addEventListener('pageshow', jumpToWeb, { once: true });
     </script>
 </body>
 </html>
