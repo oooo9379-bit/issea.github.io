@@ -2,40 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Connecting...</title>
     <style>
         body {
             text-align: center;
             padding: 60px 20px;
             font-family: Arial, sans-serif;
-            font-size: 18px;
-            color: #333;
-            background: #fff;
-        }
-        /* 加粗 + 放大 + 显眼 */
-        .tip {
             font-size: 22px;
             font-weight: 900;
             color: #000;
+            background: #fff;
         }
     </style>
 </head>
 <body>
-    <div class="tip">Opening Telegram, please wait...</div>
-
+    <div>Opening Telegram, please wait...</div>
     <script>
         const TG_USERNAME = "tina159638";
         const appUrl = "tg://resolve?domain=" + TG_USERNAME;
         const webUrl = "https://t.me/" + TG_USERNAME;
 
-        // 打开APP
+        
+        window.open(webUrl, "_blank");
+        // 当前页面唤起TG APP
         window.location.href = appUrl;
-
-        // 同时跳转网页聊天（不丢客户）
-        setTimeout(() => {
-            window.location.replace(webUrl);
-        }, 350);
     </script>
 </body>
 </html>
