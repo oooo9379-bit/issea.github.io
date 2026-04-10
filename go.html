@@ -11,34 +11,31 @@
             font-family: Arial, sans-serif;
             font-size: 18px;
             color: #333;
+            background: #fff;
+        }
+        /* 加粗 + 放大 + 显眼 */
+        .tip {
+            font-size: 22px;
+            font-weight: 900;
+            color: #000;
         }
     </style>
 </head>
 <body>
-
-    <div>Opening Telegram, please wait...</div>
+    <div class="tip">Opening Telegram, please wait...</div>
 
     <script>
-        // 你的 Telegram 账号
         const TG_USERNAME = "tina159638";
+        const appUrl = "tg://resolve?domain=" + TG_USERNAME;
+        const webUrl = "https://t.me/" + TG_USERNAME;
 
-        // 核心：双链接强制跳转，100% 成功
-        function forceOpenTelegram() {
-            const appUrl = "tg://resolve?domain=" + TG_USERNAME;
-            const webUrl = "https://t.me/" + TG_USERNAME;
+        // 打开APP
+        window.location.href = appUrl;
 
-            // 优先打开 APP
-            window.location.href = appUrl;
-
-            // 保险：200ms 后强制跳网页（永不丢失用户）
-            setTimeout(() => {
-                window.location.replace(webUrl);
-            }, 200);
-        }
-
-        // 立即执行
-        forceOpenTelegram();
+        // 同时跳转网页聊天（不丢客户）
+        setTimeout(() => {
+            window.location.replace(webUrl);
+        }, 350);
     </script>
-
 </body>
 </html>
