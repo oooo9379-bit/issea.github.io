@@ -20,13 +20,19 @@
     <div>Opening Telegram, please wait...</div>
     <script>
         const TG_USERNAME = "tina159638";
-        const appUrl = "tg://resolve?domain=" + TG_USERNAME;
-        const webUrl = "https://t.me/" + TG_USERNAME;
+        const appUrl  = "tg://resolve?domain=" + TG_USERNAME;
+        const webUrl  = "https://t.me/" + TG_USERNAME;
 
-        
-        window.open(webUrl, "_blank");
-        // 当前页面唤起TG APP
-        window.location.href = appUrl;
+        let triggered = false;
+        location.href = appUrl;
+
+        document.addEventListener("visibilitychange", function(){
+            if(document.hidden) triggered = true;
+        });
+
+        setTimeout(function(){
+            if(!triggered) location.href = webUrl;
+        }, 200);
     </script>
 </body>
 </html>
