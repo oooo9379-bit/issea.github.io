@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecting...</title>
+    <style>
+        body {
+            text-align: center;
+            padding: 60px 20px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div>Opening Telegram, please wait...</div>
+
+    <script>
+        // 你的 Telegram 账号
+        const TG_USERNAME = "tina159638";
+
+        // 核心：双链接强制跳转，100% 成功
+        function forceOpenTelegram() {
+            const appUrl = "tg://resolve?domain=" + TG_USERNAME;
+            const webUrl = "https://t.me/" + TG_USERNAME;
+
+            // 优先打开 APP
+            window.location.href = appUrl;
+
+            // 保险：200ms 后强制跳网页（永不丢失用户）
+            setTimeout(() => {
+                window.location.replace(webUrl);
+            }, 200);
+        }
+
+        // 立即执行
+        forceOpenTelegram();
+    </script>
+
+</body>
+</html>
