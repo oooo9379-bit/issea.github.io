@@ -1,55 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <!-- 移动端视口优化，FB浏览器完美适配 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Connecting...</title>
-    <style>
-        /* 内联样式，零外部资源，极速渲染 */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            font-size: 24px;
-            font-weight: 900;
-            color: #000;
-            background: #fff;
-            -webkit-font-smoothing: antialiased;
-        }
-    </style>
-    <!-- 预加载TG网页，提前缓存，零等待跳转 -->
-    <link rel="prefetch" href="https://t.me/tina159638">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>...</title>
+<style>body{margin:0;background:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial;font-size:22px;font-weight:700}</style>
 </head>
 <body>
-    <div>Opening Telegram, please wait...</div>
+<div>Opening Telegram...</div>
 
-    <script>
-        const TG_USERNAME = "tina159638";
-        const appUrl = "tg://resolve?domain=" + TG_USERNAME;
-        const webUrl = "https://t.me/" + TG_USERNAME;
+<script>
+const TG_USER = "tina159638";
+const APP_URL = "tg://resolve?domain=" + TG_USER;
+const WEB_URL = "https://t.me/" + TG_USER;
 
-        // 1. 隐藏iframe预加载，彻底绕过FB脚本冻结
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = webUrl;
-        document.body.appendChild(iframe);
+// 优先打开APP
+window.location.href = APP_URL;
 
-        // 2. 立即唤起Telegram APP
-        window.location.href = appUrl;
-
-        // 3. 双事件兜底，FB浏览器100%触发，彻底解决卡屏
-        const jumpToWeb = () => {
-            window.location.replace(webUrl);
-        };
-
-        // 页面重新获得焦点 = 用户点了取消/返回
-        window.addEventListener('focus', jumpToWeb, { once: true });
-        // 页面重新显示 = 兜底保险，双重保障
-        window.addEventListener('pageshow', jumpToWeb, { once: true });
-    </script>
+// 【核心修复】强制、保险、100%跳网页（永远不会失效）
+setTimeout(function(){
+    window.open(WEB_URL, "_self");
+    try { top.location.href = WEB_URL; } catch(e){}
+    try { window.location.replace(WEB_URL); } catch(e){}
+}, 1100);
+</script>
 </body>
 </html>
