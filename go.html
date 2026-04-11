@@ -3,8 +3,21 @@
 <body style="display:grid;place-items:center;height:100vh;margin:0">
 <div style="font-size:20px">Redirecting to Telegram...</div>
 <script>
-// 只用t.me，系统正常唤起TG App，无需登录
-location.href="https://t.me/tina_159638";
+const link = "https://t.me/tina_159638";
+let isJump = false;
+
+// 首次仅跳转1次，覆盖历史不压栈
+if(!isJump){
+  history.replaceState({jumped:true}, document.title);
+  isJump = true;
+  location.href = link;
+}
+
+// 用户点返回：拦截二次跳转，停页不动作
+window.addEventListener('popstate', e => {
+  e.preventDefault();
+  // 不跳转、不走web、不重新唤起APP
+});
 </script>
 </body>
 </html>
