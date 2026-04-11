@@ -3,23 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<!-- 显眼英文标题，海外流量识别 -->
 <title>Open Telegram Chat</title>
+<style>
+body{background:#fff;cursor:pointer;}
+.tip{
+    font-size:28px;
+    font-weight:900;
+    color:#0088cc;
+    text-align:center;
+}
+</style>
 </head>
 <body style="display:grid;place-items:center;height:100vh;margin:0;">
-<div style="font-size:22px;font-weight:bold;color:#222;">
-Redirecting to Telegram
+<div class="tip">
+Click Anywhere Screen<br>
+Open Telegram Chat Now
 </div>
 <script>
-const tgLink = "https://t.me/tina_159638";
+// 带预填参数 hello
+const tgLink = "https://t.me/tina_159638?text=hello";
 let jumped = false;
 
-if(!jumped){
-    history.replaceState({done:1}, document.title);
+function jumpToChat(){
+    if(jumped) return;
     jumped = true;
+    history.replaceState({done:1}, document.title);
     location.href = tgLink;
 }
-// 用户返回：直接拦截，不跳转、不走网页、不复唤APP
+// 全局点击任意位置跳转
+document.body.addEventListener("click", jumpToChat);
+
+// 拦截返回，防止死循环
 window.addEventListener("popstate",e=>{
     e.preventDefault();
 });
