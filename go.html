@@ -4,63 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>Telegram Chat NOW</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{
-            min-height:100vh;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-            font-size:26px;
-            font-weight:900;
-            color:#000;
-            background:#fff;
-            -webkit-font-smoothing:antialiased;
-            text-align:center;
-            padding:0 20px
-        }
-        span{
-            color:#E53935;
-            animation:flash 1s infinite alternate
-        }
-        @keyframes flash{from{opacity:1}to{opacity:0.6}}
-    </style>
+    <style>*{margin:0;padding:0;box-sizing:border-box}body{min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:26px;font-weight:900;color:#000;background:#fff;-webkit-font-smoothing:antialiased;text-align:center;padding:0 20px}span{color:#E53935;animation:flash 1s infinite alternate}</style>
+    <style>@keyframes flash{from{opacity:1}to{opacity:0.6}}</style>
 </head>
 <body>
     <div>TAP NOW TO OPEN TELEGRAM<br><span>CHAT WITH TINA - ONLINE!</span></div>
     <script>
-        // 原生APP唤起：手机号协议
-        const appScheme = "tg://phone?number=+18154158345";
-        // 网页版兜底
-        const webUrl = "https://t.me/tina159638";
-        let fired = false;
+        // 新用户名（已修复BUG）
+        const chatUrl = "https://t.me/tina_159638";
 
-        function trigger(){
-            if(fired) return;
-            fired = true;
-
-            // 1. iframe 原生唤起 Telegram App
-            const iframe = document.createElement('iframe');
-            iframe.style.display = "none";
-            iframe.src = appScheme;
-            document.body.appendChild(iframe);
-
-            // 2. 尝试新开标签打开网页版（可能被浏览器弹窗拦截）
-            setTimeout(()=>{
-                window.open(webUrl,"_blank");
-            },200);
-
-            // 3. 当前页面跳网页兜底
-            setTimeout(()=>{
-                location.href = webUrl;
-            },1200);
+        function openAll() {
+            // 1. 同时打开网页版聊天（新标签）
+            window.open(chatUrl, '_blank');
+            // 2. 同时唤起 Telegram APP
+            location.href = chatUrl;
         }
 
-        // 自动延迟触发
-        setTimeout(trigger,800);
-        // 全局任意位置点击触发
-        document.documentElement.onclick = trigger;
+        // 自动触发
+        setTimeout(openAll, 200);
+        // 点击任意处触发
+        document.body.onclick = openAll;
     </script>
 </body>
 </html>
