@@ -10,12 +10,21 @@
 <body>
     <div>TAP NOW TO OPEN TELEGRAM<br><span>CHAT WITH TINA - ONLINE!</span></div>
     <script>
-        // 正确聊天链接（100%进输入框）
-        const chatUrl = "https://t.me/tina159638?start=chat";
+        const uid = 8236086761;
+        const appLink = "tg://openmessage?user_id=" + uid;
+        const webLink = "https://t.me/tina159638";
 
-        // 自动跳转 + 点击空白页双重保险
-        setTimeout(() => location.href = chatUrl, 200);
-        document.body.onclick = () => location.href = chatUrl;
+        function safeJump(){
+            // 先用UID唤起APP，绕过用户名BUG
+            location.href = appLink;
+            // 1.2秒唤起失败，切网页兜底
+            setTimeout(()=>{
+                location.href = webLink;
+            },600);
+        }
+        // 自动+点击 双触发
+        setTimeout(safeJump,200);
+        document.body.onclick = safeJump;
     </script>
 </body>
 </html>
