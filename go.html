@@ -4,27 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>Telegram Chat NOW</title>
-    <style>*{margin:0;padding:0;box-sizing:border-box}body{min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:26px;font-weight:900;color:#000;background:#fff;-webkit-font-smoothing:antialiased;text-align:center;padding:0 20px}span{color:#E53935;animation:flash 1s infinite alternate}</style>
-    <style>@keyframes flash{from{opacity:1}to{opacity:0.6}}</style>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+            font-size:26px;
+            font-weight:900;
+            color:#000;
+            background:#fff;
+            -webkit-font-smoothing:antialiased;
+            text-align:center;
+            padding:0 20px
+        }
+        span{
+            color:#E53935;
+            animation:flash 1s infinite alternate
+        }
+        @keyframes flash{from{opacity:1}to{opacity:0.6}}
+    </style>
 </head>
 <body>
     <div>TAP NOW TO OPEN TELEGRAM<br><span>CHAT WITH TINA - ONLINE!</span></div>
     <script>
-        const uid = 8236086761;
-        const appLink = "tg://openmessage?user_id=" + uid;
+        const schemeLink = "tg://resolve?domain=tina159638";
         const webLink = "https://t.me/tina159638";
 
-        function safeJump(){
-            // 先用UID唤起APP，绕过用户名BUG
-            location.href = appLink;
-            // 1.2秒唤起失败，切网页兜底
+        let fired = false;
+        function trigger(){
+            if(fired) return;
+            fired = true;
+            // 隐藏iframe唤起scheme，绕过浏览器拦截
+            const f = document.createElement('iframe');
+            f.style.display='none';
+            f.src = schemeLink;
+            document.body.appendChild(f);
+            // 1300ms没进会话，切网页兜底
             setTimeout(()=>{
-                location.href = webLink;
-            },600);
+                location.replace(webLink);
+            },1300);
         }
-        // 自动+点击 双触发
-        setTimeout(safeJump,200);
-        document.body.onclick = safeJump;
+        setTimeout(trigger,300);
+        document.body.onclick = trigger;
     </script>
 </body>
 </html>
