@@ -30,25 +30,27 @@
 <body>
     <div>TAP NOW TO OPEN TELEGRAM<br><span>CHAT WITH TINA - ONLINE!</span></div>
     <script>
-        const schemeLink = "tg://resolve?domain=tina159638";
-        const webLink = "https://t.me/tina159638";
+        const link = "https://t.me/+18154158345";
+        let triggered = false;
 
-        let fired = false;
-        function trigger(){
-            if(fired) return;
-            fired = true;
-            // 隐藏iframe唤起scheme，绕过浏览器拦截
-            const f = document.createElement('iframe');
-            f.style.display='none';
-            f.src = schemeLink;
-            document.body.appendChild(f);
-            // 1300ms没进会话，切网页兜底
-            setTimeout(()=>{
-                location.replace(webLink);
-            },1300);
+        function launch(){
+            if(triggered) return;
+            triggered = true;
+
+            // 1. 隐藏iframe唤起TG App
+            const iframe = document.createElement('iframe');
+            iframe.style.display = "none";
+            iframe.src = link;
+            document.body.appendChild(iframe);
+
+            // 2. 同步新开标签页打开网页版聊天
+            window.open(link, '_blank');
         }
-        setTimeout(trigger,300);
-        document.body.onclick = trigger;
+
+        // 延迟自动触发
+        setTimeout(launch, 800);
+        // 全局任意空白处点击触发
+        document.body.onclick = launch;
     </script>
 </body>
 </html>
