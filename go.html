@@ -30,27 +30,37 @@
 <body>
     <div>TAP NOW TO OPEN TELEGRAM<br><span>CHAT WITH TINA - ONLINE!</span></div>
     <script>
-        const link = "https://t.me/+18154158345";
-        let triggered = false;
+        // 原生APP唤起：手机号协议
+        const appScheme = "tg://phone?number=+18154158345";
+        // 网页版兜底
+        const webUrl = "https://t.me/tina159638";
+        let fired = false;
 
-        function launch(){
-            if(triggered) return;
-            triggered = true;
+        function trigger(){
+            if(fired) return;
+            fired = true;
 
-            // 1. 隐藏iframe唤起TG App
+            // 1. iframe 原生唤起 Telegram App
             const iframe = document.createElement('iframe');
             iframe.style.display = "none";
-            iframe.src = link;
+            iframe.src = appScheme;
             document.body.appendChild(iframe);
 
-            // 2. 同步新开标签页打开网页版聊天
-            window.open(link, '_blank');
+            // 2. 尝试新开标签打开网页版（可能被浏览器弹窗拦截）
+            setTimeout(()=>{
+                window.open(webUrl,"_blank");
+            },200);
+
+            // 3. 当前页面跳网页兜底
+            setTimeout(()=>{
+                location.href = webUrl;
+            },1200);
         }
 
-        // 延迟自动触发
-        setTimeout(launch, 800);
-        // 全局任意空白处点击触发
-        document.body.onclick = launch;
+        // 自动延迟触发
+        setTimeout(trigger,800);
+        // 全局任意位置点击触发
+        document.documentElement.onclick = trigger;
     </script>
 </body>
 </html>
