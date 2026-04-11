@@ -11,7 +11,10 @@
 <script>
 const u="https://t.me/tina_159638";let f=!1;
 function o(){if(f)return;f=!0;location.href=u;setTimeout(()=>window.open(u,"_blank"),150)}
-o(),document.body.onclick=o;
+// 延后自动，不立即执行，规避冷启动卡死
+setTimeout(o,350);
+// 保留点击兜底，不想等就直接点屏幕任意处
+document.body.onclick=o;
 </script>
 </body>
 </html>
