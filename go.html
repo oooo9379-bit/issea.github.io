@@ -2,60 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Open Telegram Now</title>
-<style>
-  body{
-    margin:0;
-    height:100vh;
-    display:grid;
-    place-items:center;
-    background:#fff;
-    color:#000;
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;
-  }
-  .title{
-    font-size:26px;
-    font-weight:700;
-    color:#111;
-  }
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- 显眼英文标题，海外流量识别 -->
+<title>Open Telegram Chat</title>
 </head>
-<body>
-<div class="title">Opening Telegram...</div>
-
+<body style="display:grid;place-items:center;height:100vh;margin:0;">
+<div style="font-size:22px;font-weight:bold;color:#222;">
+Redirecting to Telegram
+</div>
 <script>
-// 👉 改成你真实用户名（严格大小写，无空格）
-const username = "tina_159638";
-// Nicegram 首选协议
-const tgProto = `tg://resolve?domain=${username}`;
-// 降级（官方 TG）
-const tgWeb = `https://t.me/${username}`;
-
+const tgLink = "https://t.me/tina_159638";
 let jumped = false;
 
-function openTelegram() {
-  if(jumped) return;
-  jumped = true;
-  // 覆盖历史，防返回卡死
-  history.replaceState({ jumped: true }, document.title);
-  
-  // 先试原生协议（Nicegram 必认）
-  window.location.href = tgProto;
-  
-  // 降级：200ms 没唤起则走 t.me
-  setTimeout(() => {
-    window.location.href = tgWeb;
-  }, 200);
+if(!jumped){
+    history.replaceState({done:1}, document.title);
+    jumped = true;
+    location.href = tgLink;
 }
-
-// 拦截返回，不重跳、不卡死
-window.addEventListener('popstate', (e) => {
-  e.preventDefault();
+// 用户返回：直接拦截，不跳转、不走网页、不复唤APP
+window.addEventListener("popstate",e=>{
+    e.preventDefault();
 });
-
-// 立即执行
-openTelegram();
 </script>
 </body>
 </html>
